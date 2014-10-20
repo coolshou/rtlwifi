@@ -235,6 +235,7 @@ static struct rtl_hal_ops rtl8192ce_hal_ops = {
 	.set_key = rtl92ce_set_key,
 	.init_sw_leds = rtl92ce_init_sw_leds,
 	.allow_all_destaddr = rtl92ce_allow_all_destaddr,
+	.allow_error_packet = rtl92ce_allow_error_packet,
 	.get_bbreg = rtl92c_phy_query_bb_reg,
 	.set_bbreg = rtl92c_phy_set_bb_reg,
 	.get_rfreg = rtl92c_phy_query_rf_reg,

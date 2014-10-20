@@ -64,4 +64,6 @@ void rtl88ee_resume(struct ieee80211_hw *hw);
 void rtl88ee_allow_all_destaddr(struct ieee80211_hw *hw,
 	bool allow_all_da, bool write_into_reg);
 void rtl88ee_fw_clk_off_timer_callback(unsigned long data);
+void rtl8188ee_allow_error_packet(struct ieee80211_hw *hw,
+		bool b_allow_err_pkt);
 #endif

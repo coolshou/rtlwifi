@@ -427,6 +427,7 @@ static void _rtl_init_mac80211(struct ieee80211_hw *hw)
 	    BIT(NL80211_IFTYPE_AP) |
 	    BIT(NL80211_IFTYPE_STATION) |
 	    BIT(NL80211_IFTYPE_ADHOC) |
+	    BIT(NL80211_IFTYPE_MONITOR) |
 	    BIT(NL80211_IFTYPE_MESH_POINT) |
 	    BIT(NL80211_IFTYPE_P2P_CLIENT) |
 	    BIT(NL80211_IFTYPE_P2P_GO);
@@ -696,7 +697,8 @@ static void _rtl_query_shortgi(struct ieee80211_hw *hw,
 		bw_80 = mac->bw_80;
 	} else if (mac->opmode == NL80211_IFTYPE_AP ||
 		 mac->opmode == NL80211_IFTYPE_ADHOC ||
-		 mac->opmode == NL80211_IFTYPE_MESH_POINT) {
+		 mac->opmode == NL80211_IFTYPE_MESH_POINT ||
+		mac->opmode ==	NL80211_IFTYPE_MONITOR) {
 		bw_40 = sta->ht_cap.cap & IEEE80211_HT_CAP_SUP_WIDTH_20_40;
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 8, 0))
 		bw_80 = sta->vht_cap.vht_supported;
@@ -763,7 +765,8 @@ static void _rtl_txrate_selectmode(struct ieee80211_hw *hw,
 		if (mac->opmode == NL80211_IFTYPE_STATION) {
 			tcb_desc->ratr_index = 0;
 		} else if (mac->opmode == NL80211_IFTYPE_ADHOC ||
-				mac->opmode == NL80211_IFTYPE_MESH_POINT) {
+				mac->opmode == NL80211_IFTYPE_MESH_POINT ||
+				mac->opmode ==  NL80211_IFTYPE_MONITOR) {
 			if (tcb_desc->multicast || tcb_desc->broadcast) {
 				tcb_desc->hw_rate =
 				    rtlpriv->cfg->maps[RTL_RC_CCK_RATE2M];
@@ -802,7 +805,8 @@ static void _rtl_txrate_selectmode(struct ieee80211_hw *hw,
 				tcb_desc->ratr_index = RATR_INX_WIRELESS_G;
 
 		} else if (mac->opmode == NL80211_IFTYPE_AP ||
-			mac->opmode == NL80211_IFTYPE_ADHOC) {
+			mac->opmode == NL80211_IFTYPE_ADHOC ||
+			mac->opmode == NL80211_IFTYPE_MONITOR) {
 			if (NULL != sta) {
 				if (sta->aid > 0)
 					tcb_desc->mac_id = sta->aid + 1;
@@ -827,7 +831,8 @@ static void _rtl_query_bandwidth_mode(struct ieee80211_hw *hw,
 		return;
 	if (mac->opmode == NL80211_IFTYPE_AP ||
 	    mac->opmode == NL80211_IFTYPE_ADHOC ||
-	    mac->opmode == NL80211_IFTYPE_MESH_POINT) {
+	    mac->opmode == NL80211_IFTYPE_MESH_POINT ||
+	    mac->opmode == NL80211_IFTYPE_MONITOR) {
 		if (!(sta->ht_cap.ht_supported) ||
 		    !(sta->ht_cap.cap & IEEE80211_HT_CAP_SUP_WIDTH_20_40))
 			return;
@@ -849,7 +854,8 @@ static void _rtl_query_bandwidth_mode(struct ieee80211_hw *hw,
 	    rtlpriv->rtlhal.hw_type == HARDWARE_TYPE_RTL8821AE) {
 		if (mac->opmode == NL80211_IFTYPE_AP ||
 		    mac->opmode == NL80211_IFTYPE_ADHOC ||
-		    mac->opmode == NL80211_IFTYPE_MESH_POINT) {
+		    mac->opmode == NL80211_IFTYPE_MESH_POINT ||
+		    mac->opmode == NL80211_IFTYPE_MONITOR) {
 			if (!(sta->vht_cap.vht_supported))
 				return;
 		} else if (mac->opmode == NL80211_IFTYPE_STATION) {

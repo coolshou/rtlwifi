@@ -1,0 +1,4 @@
+1.channel configuration ?
+2.radio tap header for wireshark
+3.user tx support
+4.check all chips

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+IFACE=$(nmcli d | grep "wireless" |  awk '{print $1}')
+iw dev $IFACE interface add wmon0 type monitor
+ifconfig wmon0 up

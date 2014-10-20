@@ -151,6 +151,13 @@ static int rtl_op_start(struct ieee80211_hw *hw)
 		return 0;
 	mutex_lock(&rtlpriv->locks.conf_mutex);
 	err = rtlpriv->intf_ops->adapter_start(hw);
+
+
+	RT_TRACE(rtlpriv, COMP_ERR, DBG_EMERG,"turn on sniffer");
+	rtlpriv->cfg->ops->allow_all_destaddr(hw,true,true);
+	rtlpriv->cfg->ops->allow_error_packet(hw,true);
+
+
 	if (!err)
 		rtl_watch_dog_timer_callback((unsigned long)hw);
 	mutex_unlock(&rtlpriv->locks.conf_mutex);
@@ -309,6 +316,10 @@ static int rtl_op_add_interface(struct ieee80211_hw *hw,
 		rtlpriv->cfg->ops->set_hw_reg(hw, HW_VAR_BASIC_RATE,
 				(u8 *) (&mac->basic_rates));
 		break;
+	case NL80211_IFTYPE_MONITOR:
+		RT_TRACE(rtlpriv, COMP_MAC80211, DBG_EMERG,
+			 "ADD NL80211_IFTYPE_MONITOR");
+		break;
 	default:
 		RT_TRACE(rtlpriv, COMP_ERR, DBG_EMERG,
 			 "operation mode %d is not support!\n", vif->type);
@@ -358,6 +369,11 @@ static void rtl_op_remove_interface(struct ieee80211_hw *hw,
 		}
 	}
 
+
+	if (vif->type == NL80211_IFTYPE_MONITOR) {
+		RT_TRACE(rtlpriv, COMP_MAC80211, DBG_EMERG,
+			 "REMOVE NL80211_IFTYPE_MONITOR");
+	}
 	/*
 	 *Note: We assume NL80211_IFTYPE_UNSPECIFIED as
 	 *NO LINK for our hardware.

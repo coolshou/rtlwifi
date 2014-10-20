@@ -266,6 +266,7 @@ static struct rtl_hal_ops rtl8188ee_hal_ops = {
 	.set_key = rtl88ee_set_key,
 	.init_sw_leds = rtl88ee_init_sw_leds,
 	.allow_all_destaddr = rtl88ee_allow_all_destaddr,
+	.allow_error_packet = rtl8188ee_allow_error_packet,
 	.get_bbreg = rtl88e_phy_query_bb_reg,
 	.set_bbreg = rtl88e_phy_set_bb_reg,
 	.get_rfreg = rtl88e_phy_query_rf_reg,

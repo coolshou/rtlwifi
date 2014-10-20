@@ -2740,3 +2740,16 @@ void rtl88ee_allow_all_destaddr(struct ieee80211_hw *hw,
 		"receive_config=0x%08X, write_into_reg=%d\n",
 		rtlpci->receive_config, write_into_reg);
 }
+void rtl8188ee_allow_error_packet(struct ieee80211_hw *hw,
+		bool b_allow_err_pkt)
+{
+	struct rtl_priv *rtlpriv = rtl_priv(hw);
+	struct rtl_pci *rtlpci = rtl_pcidev(rtl_pcipriv(hw));
+
+	if (b_allow_err_pkt)
+		rtlpci->receive_config |= (RCR_ACRC32 | RCR_AICV);
+	else
+		rtlpci->receive_config &= ~(RCR_ACRC32 | RCR_AICV);
+
+	rtl_write_dword(rtlpriv, REG_RCR, rtlpci->receive_config);
+}

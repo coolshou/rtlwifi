@@ -2077,6 +2077,8 @@ struct rtl_hal_ops {
 			   u32 regaddr, u32 bitmask, u32 data);
 	void (*allow_all_destaddr)(struct ieee80211_hw *hw,
 				   bool allow_all_da, bool write_into_reg);
+	void (*allow_error_packet)(struct ieee80211_hw *hw,
+		bool b_allow_err_pkt);
 	void (*linked_set_reg)(struct ieee80211_hw *hw);
 	void (*check_switch_to_dmdp)(struct ieee80211_hw *hw);
 	void (*dualmac_easy_concurrent)(struct ieee80211_hw *hw);
