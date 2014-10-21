@@ -121,10 +121,16 @@ int rtl92ee_init_sw_vars(struct ieee80211_hw *hw)
 				  RCR_ACF			|
 				  RCR_ADF			|
 				  RCR_AICV			|
-				  RCR_ACRC32			|
 				  RCR_AB			|
 				  RCR_AM			|
 				  RCR_APM			|
+
+#ifdef RTLWIFI_SNIFFER
+				  RCR_ACRC32			|
+				  RCR_AAP 			|
+				  RCR_APWRMGT			|
+				  RCR_DISDECMYPKT		|
+#endif
 				  0);
 
 	rtlpci->irq_mask[0] = (u32) (IMR_PSTIMEOUT		|

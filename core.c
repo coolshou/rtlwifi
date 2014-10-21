@@ -152,12 +152,6 @@ static int rtl_op_start(struct ieee80211_hw *hw)
 	mutex_lock(&rtlpriv->locks.conf_mutex);
 	err = rtlpriv->intf_ops->adapter_start(hw);
 
-
-	RT_TRACE(rtlpriv, COMP_ERR, DBG_EMERG,"turn on sniffer");
-	rtlpriv->cfg->ops->allow_all_destaddr(hw,true,true);
-	rtlpriv->cfg->ops->allow_error_packet(hw,true);
-
-
 	if (!err)
 		rtl_watch_dog_timer_callback((unsigned long)hw);
 	mutex_unlock(&rtlpriv->locks.conf_mutex);
@@ -694,6 +688,7 @@ static int rtl_op_config(struct ieee80211_hw *hw, u32 changed)
 #endif
 		enum nl80211_channel_type channel_type = NL80211_CHAN_NO_HT;
 		u8 wide_chan = (u8) channel->hw_value;
+		printk("channel=%d\n",wide_chan);
 
 		/* channel_type is for 20&40M */
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 10, 0))
