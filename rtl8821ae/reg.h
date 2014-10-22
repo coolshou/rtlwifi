@@ -772,6 +772,7 @@
 #define	RCR_AMF						BIT(13)
 #define	RCR_ACF						BIT(12)
 #define	RCR_ADF						BIT(11)
+#define RCR_DISDECMYPKT				BIT(10)
 #define	RCR_AICV					BIT(9)
 #define	RCR_ACRC32					BIT(8)
 #define	RCR_CBSSID_BCN				BIT(7)

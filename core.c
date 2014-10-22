@@ -688,7 +688,7 @@ static int rtl_op_config(struct ieee80211_hw *hw, u32 changed)
 #endif
 		enum nl80211_channel_type channel_type = NL80211_CHAN_NO_HT;
 		u8 wide_chan = (u8) channel->hw_value;
-		printk("channel=%d\n",wide_chan);
+
 
 		/* channel_type is for 20&40M */
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 10, 0))
@@ -698,6 +698,33 @@ static int rtl_op_config(struct ieee80211_hw *hw, u32 changed)
 #else
 		channel_type = hw->conf.channel_type;
 #endif
+
+
+		/*
+			3025 enum nl80211_chan_width {
+			3026         NL80211_CHAN_WIDTH_20_NOHT,
+			3027         NL80211_CHAN_WIDTH_20,
+			3028         NL80211_CHAN_WIDTH_40,
+			3029         NL80211_CHAN_WIDTH_80,
+			3030         NL80211_CHAN_WIDTH_80P80,
+			3031         NL80211_CHAN_WIDTH_160,
+			3032         NL80211_CHAN_WIDTH_5,
+			3033         NL80211_CHAN_WIDTH_10,
+			3034 };
+
+			2999 enum nl80211_channel_type {
+			3000         NL80211_CHAN_NO_HT,
+			3001         NL80211_CHAN_HT20,
+			3002         NL80211_CHAN_HT40MINUS,
+			3003         NL80211_CHAN_HT40PLUS
+			3004 };
+
+		*/
+		printk("channel=%d,width=%d,channel_type=%d\n",wide_chan,width,channel_type);
+
+
+
+
 		if (mac->act_scanning)
 			mac->n_channels++;
 

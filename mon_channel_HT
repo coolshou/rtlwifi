@@ -1,0 +1,9 @@
+#!/bin/bash
+
+#example:
+#sudo ./mon_channel_HT 1 HT40+
+#sudo ./mon_channel_HT 7 HT40-
+IFACE=$(nmcli d | grep "wireless" |  awk '{print $1}')
+test -z $IFACE && WIFI="WIFI" || iw dev $IFACE del
+test -z $2 && echo 'please input HT INFO'  ||  iw phy phy0 set channel $1 $2
+

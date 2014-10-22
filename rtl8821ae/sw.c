@@ -163,22 +163,29 @@ int rtl8821ae_init_sw_vars(struct ieee80211_hw *hw)
 	rtlpriv->rtlhal.bandset = BAND_ON_BOTH;
 	rtlpriv->rtlhal.macphymode = SINGLEMAC_SINGLEPHY;
 
-	rtlpci->receive_config = (RCR_APPFCS	|
-				RCR_APP_MIC		|
-				RCR_APP_ICV		|
-				RCR_APP_PHYST_RXFF	|
-				RCR_NONQOS_VHT		|
-				RCR_HTC_LOC_CTRL	|
-				RCR_AMF			|
-				RCR_ACF			|
-			/*This bit controls the PS-Poll packet filter.*/
-				RCR_ADF			|
-				RCR_AICV		|
-				RCR_ACRC32		|
-				RCR_AB			|
-				RCR_AM			|
-				RCR_APM			|
-				0);
+
+
+	rtlpci->receive_config = (RCR_APPFCS			|
+				  RCR_APP_MIC			|
+				  RCR_APP_ICV			|
+				  RCR_APP_PHYST_RXFF		|
+				  RCR_HTC_LOC_CTRL		|
+				  RCR_AMF			|
+				  RCR_ACF			|
+				  RCR_ADF			|
+				  RCR_AICV			|
+				  RCR_AB			|
+				  RCR_AM			|
+				  RCR_APM			|
+				  RCR_NONQOS_VHT		|
+
+#ifdef RTLWIFI_SNIFFER
+				  RCR_ACRC32			|
+				  RCR_AAP 			|
+				  RCR_APWRMGT			|
+				  RCR_DISDECMYPKT		|
+#endif
+				  0);
 
 
 	rtlpci->irq_mask[0] =
