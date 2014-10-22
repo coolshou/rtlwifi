@@ -1,0 +1,6 @@
+#!/bin/bash
+
+IFACE=$(nmcli d | grep "wireless" |  awk '{print $1}')
+test -z $IFACE && WIFI="WIFI" || iw dev $IFACE del
+test -z $1 && echo 'please input channel!'  ||  iw phy phy0 set channel $1
+
