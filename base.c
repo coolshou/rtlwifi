@@ -38,6 +38,7 @@
 #include <linux/ip.h>
 #include <linux/module.h>
 #include <linux/udp.h>
+#include "version.h"
 
 /*
  *NOTICE!!!: This file will be very big, we should
@@ -2193,6 +2194,7 @@ MODULE_AUTHOR("Realtek WlanFAE	<wlanfae@realtek.com>");
 MODULE_AUTHOR("Larry Finger	<Larry.FInger@lwfinger.net>");
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("Realtek 802.11n PCI wireless core");
+MODULE_VERSION(GIT_VERSION);
 
 struct rtl_global_var rtl_global_var = {};
 EXPORT_SYMBOL_GPL(rtl_global_var);

@@ -44,6 +44,7 @@
 #include "led.h"
 #include "table.h"
 #include "../btcoexist/rtl_btc.h"
+#include "../version.h"
 
 static void rtl8821ae_init_aspm_vars(struct ieee80211_hw *hw)
 {
@@ -468,6 +469,7 @@ MODULE_AUTHOR("Realtek WlanFAE	<wlanfae@realtek.com>");
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("Realtek 8821ae 802.11ac PCI wireless");
 MODULE_FIRMWARE("rtlwifi/rtl8821aefw.bin");
+MODULE_VERSION(GIT_VERSION);
 
 module_param_named(swenc, rtl8821ae_mod_params.sw_crypto, bool, 0444);
 module_param_named(debug, rtl8821ae_mod_params.debug, int, 0444);
