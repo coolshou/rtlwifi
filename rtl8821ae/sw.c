@@ -331,6 +331,7 @@ static struct rtl_hal_ops rtl8821ae_hal_ops = {
 	.set_key = rtl8821ae_set_key,
 	.init_sw_leds = rtl8821ae_init_sw_leds,
 	.allow_all_destaddr = rtl8821ae_allow_all_destaddr,
+	.allow_error_packet = rtl8821ae_allow_error_packet,
 	.get_bbreg = rtl8821ae_phy_query_bb_reg,
 	.set_bbreg = rtl8821ae_phy_set_bb_reg,
 	.get_rfreg = rtl8821ae_phy_query_rf_reg,

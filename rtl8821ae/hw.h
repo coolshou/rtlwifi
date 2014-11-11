@@ -70,4 +70,6 @@ void _rtl8821ae_resume_tx_beacon(struct ieee80211_hw *hw);
 void rtl8821ae_add_wowlan_pattern(struct ieee80211_hw *hw,
 				  struct rtl_wow_pattern *rtl_pattern,
 				  u8 index);
+void rtl8821ae_allow_error_packet(struct ieee80211_hw *hw,
+		bool b_allow_err_pkt);
 #endif

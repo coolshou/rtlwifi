@@ -4353,3 +4353,18 @@ void rtl8821ae_add_wowlan_pattern(struct ieee80211_hw *hw,
 	rtl_write_byte(rtlpriv, REG_PKT_BUFF_ACCESS_CTRL,
 		       DISABLE_TRXPKT_BUF_ACCESS);
 }
+
+void rtl8821ae_allow_error_packet(struct ieee80211_hw *hw,
+		bool b_allow_err_pkt)
+{
+	struct rtl_priv *rtlpriv = rtl_priv(hw);
+	struct rtl_pci *rtlpci = rtl_pcidev(rtl_pcipriv(hw));
+
+	if (b_allow_err_pkt)
+		rtlpci->receive_config |= (RCR_ACRC32 | RCR_AICV);
+	else
+		rtlpci->receive_config &= ~(RCR_ACRC32 | RCR_AICV);
+
+	rtl_write_dword(rtlpriv, REG_RCR, rtlpci->receive_config);
+}
+
