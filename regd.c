@@ -44,6 +44,7 @@ static struct country_code_to_enum_rd allCountries[] = {
 	{COUNTRY_CODE_GLOBAL_DOMAIN, "JP"},
 	{COUNTRY_CODE_WORLD_WIDE_13, "EC"},
 	{COUNTRY_CODE_TELEC_NETGEAR, "EC"},
+	{COUNTRY_CODE_ALL, "00"}, //jimmy, all channel
 };
 
 /*
@@ -138,6 +139,18 @@ static const struct ieee80211_regdomain rtl_regdom_14 = {
 		      RTL819x_2GHZ_CH01_11,
 			  RTL819x_2GHZ_CH12_13,
 			  RTL819x_2GHZ_CH14,
+		      }
+};
+//jimmy, all channel
+static const struct ieee80211_regdomain rtl_regdom_all = {
+	.n_reg_rules = 5,
+	.alpha2 = "99",
+	.reg_rules = {
+		      RTL819x_2GHZ_CH01_11,
+			  RTL819x_2GHZ_CH12_13,
+			  RTL819x_2GHZ_CH14,
+			  RTL819x_5GHZ_5150_5350,
+			  RTL819x_5GHZ_5470_5850,
 		      }
 };
 
@@ -380,6 +393,10 @@ static const struct ieee80211_regdomain *_rtl_regdomain_select(
 		return &rtl_regdom_14_60_64;
 	case COUNTRY_CODE_GLOBAL_DOMAIN:
 		return &rtl_regdom_14;
+	//jimmy, all channel
+	case COUNTRY_CODE_ALL:
+		printk("=============COUNTRY_CODE_ALL======== \n");
+		return &rtl_regdom_all;
 	default:
 		return &rtl_regdom_no_midband;
 	}
@@ -448,7 +465,9 @@ int rtl_regd_init(struct ieee80211_hw *hw,
 		return -EINVAL;
 
 	/* init country_code from efuse channel plan */
-	rtlpriv->regd.country_code = rtlpriv->efuse.channel_plan;
+	//rtlpriv->regd.country_code = rtlpriv->efuse.channel_plan;
+	//jimmy, ignore EEPROM setting, use all channel
+	rtlpriv->regd.country_code = COUNTRY_CODE_ALL;
 
 	RT_TRACE(rtlpriv, COMP_REGD, DBG_TRACE,
 		 "rtl: EEPROM regdomain: 0x%0x\n",

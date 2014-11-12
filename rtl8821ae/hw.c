@@ -3229,7 +3229,7 @@ static void _rtl8821ae_read_adapter_info(struct ieee80211_hw *hw, bool b_pseudo_
 		       HWSET_MAX_SIZE);
 	} else if (rtlefuse->epromtype == EEPROM_93C46) {
 		RT_TRACE(rtlpriv, COMP_ERR, DBG_EMERG,
-			 "RTL819X Not boot from eeprom, check it !!");
+			 "RTL8821AE Not boot from eeprom, check it !!");
 	}
 
 	RT_PRINT_DATA(rtlpriv, COMP_INIT, DBG_DMESG, "MAP\n",
@@ -3247,7 +3247,7 @@ static void _rtl8821ae_read_adapter_info(struct ieee80211_hw *hw, bool b_pseudo_
 
 	if (rtlefuse->autoload_failflag == true) {
 		RT_TRACE(rtlpriv, COMP_ERR, DBG_EMERG,
-			 "RTL8812AE autoload_failflag, check it !!");
+			 "RTL8821AE autoload_failflag, check it !!");
 		return;
 	}
 
