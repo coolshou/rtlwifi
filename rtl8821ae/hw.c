@@ -3325,7 +3325,9 @@ static void _rtl8821ae_read_adapter_info(struct ieee80211_hw *hw, bool b_pseudo_
 	rtlefuse->eeprom_channelplan = *(u8 *) &hwinfo[EEPROM_CHANNELPLAN];
 	if (rtlefuse->eeprom_channelplan == 0xff)
 		rtlefuse->eeprom_channelplan = 0x7F;
-
+	//jimmy, ignore eeprom_channelplan, enable support all band
+	printk("========8812ae eeprom_channelplan: %d", rtlefuse->eeprom_channelplan);
+	rtlefuse->channel_plan = COUNTRY_CODE_ALL;
 	/* set channel paln to world wide 13 */
 	/* rtlefuse->channel_plan = (u8) rtlefuse->eeprom_channelplan; */
 

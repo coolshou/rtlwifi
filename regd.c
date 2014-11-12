@@ -465,9 +465,10 @@ int rtl_regd_init(struct ieee80211_hw *hw,
 		return -EINVAL;
 
 	/* init country_code from efuse channel plan */
-	//rtlpriv->regd.country_code = rtlpriv->efuse.channel_plan;
+	rtlpriv->regd.country_code = rtlpriv->efuse.channel_plan;
 	//jimmy, ignore EEPROM setting, use all channel
-	rtlpriv->regd.country_code = COUNTRY_CODE_ALL;
+	//This overwrite efuse setting
+	//rtlpriv->regd.country_code = COUNTRY_CODE_ALL;
 
 	RT_TRACE(rtlpriv, COMP_REGD, DBG_TRACE,
 		 "rtl: EEPROM regdomain: 0x%0x\n",
@@ -478,7 +479,9 @@ int rtl_regd_init(struct ieee80211_hw *hw,
 			 "rtl: EEPROM indicates invalid contry code"
 			  "world wide 13 should be used\n");
 
-		rtlpriv->regd.country_code = COUNTRY_CODE_WORLD_WIDE_13;
+		//rtlpriv->regd.country_code = COUNTRY_CODE_WORLD_WIDE_13;
+		//jimmy, unknown 
+		rtlpriv->regd.country_code = COUNTRY_CODE_ALL;
 	}
 
 	country = _rtl_regd_find_country(rtlpriv->regd.country_code);
