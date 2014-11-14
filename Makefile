@@ -32,6 +32,7 @@ rtlwifi-objs += $(PCI_MAIN_OBJS)
 ccflags-y += -D__CHECK_ENDIAN__
 
 all: 
+	@bash ./update_version.sh
 	$(MAKE) -C $(KSRC) M=$(PWD) modules
 	@cp $(SYMBOL_FILE) btcoexist/
 	+@make -C btcoexist/
