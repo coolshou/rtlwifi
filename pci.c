@@ -928,7 +928,9 @@ static void _rtl_pci_rx_interrupt(struct ieee80211_hw *hw)
 				_rtl_pci_rx_to_mac80211(hw, skb, rx_status);
 			}
 		} else {
-			_rtl_pci_rx_to_mac80211(hw, skb, rx_status);
+			//_rtl_pci_rx_to_mac80211(hw, skb, rx_status);
+			//jimmy, port from 0019.0320.2014V626
+			dev_kfree_skb_any(skb);
 		}
 		if (rtlpriv->use_new_trx_flow) {
 			rtlpci->rx_ring[hw_queue].next_rx_rp += 1;

@@ -2034,7 +2034,7 @@ int rtl8821ae_hw_init(struct ieee80211_hw *hw)
 	rtl8821ae_phy_mac_config(hw);
 	/* because last function modify RCR, so we update
 	 * rcr var here, or TP will unstable for receive_config
-	 * is wrong, RX RCR_ACRC32 will cause TP unstabel & Rx
+	 * is wrong, RX RCR_ACRC32 will cause TP unstable & Rx
 	 * RCR_APP_ICV will cause mac80211 unassoc for cisco 1252
 	rtlpci->receive_config = rtl_read_dword(rtlpriv, REG_RCR);
 	rtlpci->receive_config &= ~(RCR_ACRC32 | RCR_AICV);
@@ -2217,11 +2217,13 @@ static int _rtl8821ae_set_media_status(struct ieee80211_hw *hw,
 		"clear 0x550 when set HW_VAR_MEDIA_STATUS\n");
 
 	if (type == NL80211_IFTYPE_UNSPECIFIED ||
-	    type == NL80211_IFTYPE_STATION) {
+	    type == NL80211_IFTYPE_STATION ||
+	    type == NL80211_IFTYPE_MONITOR ) {
 		_rtl8821ae_stop_tx_beacon(hw);
 		_rtl8821ae_enable_bcn_sub_func(hw);
 	} else if (type == NL80211_IFTYPE_ADHOC ||
-		type == NL80211_IFTYPE_AP) {
+		type == NL80211_IFTYPE_AP ||
+		type == NL80211_IFTYPE_MESH_POINT) {
 		_rtl8821ae_resume_tx_beacon(hw);
 		_rtl8821ae_disable_bcn_sub_func(hw);
 	} else {
@@ -2253,6 +2255,14 @@ static int _rtl8821ae_set_media_status(struct ieee80211_hw *hw,
 		RT_TRACE(rtlpriv, COMP_INIT, DBG_TRACE,
 			 "Set Network type to AP!\n");
 		break;
+	case NL80211_IFTYPE_MONITOR:
+		//jimmy,TODO
+		RT_TRACE(rtlpriv, COMP_INIT, DBG_TRACE,
+			 "TODO:Set Network type to MONITOR!\n");
+	case NL80211_IFTYPE_MESH_POINT:
+		//jimmy,TODO
+		RT_TRACE(rtlpriv, COMP_INIT, DBG_TRACE,
+			 "TODO:Set Network type to MP!\n");
 	default:
 		RT_TRACE(rtlpriv, COMP_ERR, DBG_EMERG,
 			 "Network type %d not support!\n", type);
@@ -2360,7 +2370,7 @@ void rtl8821ae_enable_interrupt(struct ieee80211_hw *hw)
 	struct rtl_priv *rtlpriv = rtl_priv(hw);
 	struct rtl_pci *rtlpci = rtl_pcidev(rtl_pcipriv(hw));
 
-	rtl8821ae_clear_interrupt(hw);/*clear it here first*/
+	/*rtl8821ae_clear_interrupt(hw); clear it here first*/
 
 	rtl_write_dword(rtlpriv, REG_HIMR, rtlpci->irq_mask[0] & 0xFFFFFFFF);
 	rtl_write_dword(rtlpriv, REG_HIMRE, rtlpci->irq_mask[1] & 0xFFFFFFFF);
@@ -3230,6 +3240,7 @@ static void _rtl8821ae_read_adapter_info(struct ieee80211_hw *hw, bool b_pseudo_
 	} else if (rtlefuse->epromtype == EEPROM_93C46) {
 		RT_TRACE(rtlpriv, COMP_ERR, DBG_EMERG,
 			 "RTL8821AE Not boot from eeprom, check it !!");
+		return;
 	}
 
 	RT_PRINT_DATA(rtlpriv, COMP_INIT, DBG_DMESG, "MAP\n",
