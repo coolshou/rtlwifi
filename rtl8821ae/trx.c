@@ -531,7 +531,7 @@ static void _rtl8821ae_translate_rx_signal_stuff(struct ieee80211_hw *hw,
 
 	hdr = (struct ieee80211_hdr *)tmp_buf;
 	fc = le16_to_cpu(hdr->frame_control);
-	type = WLAN_FC_GET_TYPE(hdr->frame_control);
+	type = WLAN_FC_GET_TYPE(fc);
 	praddr = hdr->addr1;
 	psaddr = ieee80211_get_SA(hdr);
 	memcpy(pstatus->psaddr, psaddr, ETH_ALEN);
@@ -556,7 +556,7 @@ static void _rtl8821ae_translate_rx_signal_stuff(struct ieee80211_hw *hw,
 	    (ether_addr_equal(praddr, rtlefuse->dev_addr));
 #endif
 
-	if (ieee80211_is_beacon(hdr->frame_control))
+	if (ieee80211_is_beacon(fc))
 		packet_beacon = true;
 	else
 		packet_beacon = false;
@@ -565,7 +565,7 @@ static void _rtl8821ae_translate_rx_signal_stuff(struct ieee80211_hw *hw,
 		rtl_priv(hw)->dm.dbginfo.num_qry_beacon_pkt++;
 
 	if (packet_matchbssid &&
-		ieee80211_is_data_qos(hdr->frame_control) &&
+		ieee80211_is_data_qos(fc) &&
 		!is_multicast_ether_addr(ieee80211_get_DA(hdr))) {
 		struct ieee80211_qos_hdr *hdr_qos =
 			(struct ieee80211_qos_hdr *)tmp_buf;
